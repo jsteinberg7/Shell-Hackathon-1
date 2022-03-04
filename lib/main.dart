@@ -13,7 +13,8 @@ void main() {
 }
 
 Future<Product> getProduct(String barcode) async {
-  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode, language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
+  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode,
+      language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
   ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
 
   if (result.status == 1) {
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
-        appBar: AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
+        appBar:
+            AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
         body: MyCustomForm(),
       ),
     );
@@ -69,20 +71,28 @@ class MyCustomForm extends StatelessWidget {
             await Vibration.vibrate();
             Product product = await getProduct(code);
             showBottomSheet(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
                 context: context,
                 builder: (context) {
                   return Container(
-                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.all(Radius.circular(30))),
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
                       // color: Colors.grey,
                       height: MediaQuery.of(context).size.height - 200,
-                      child: Center(
-                          child: Image.network(
-                        product.images[0].url,
-                        height: 400,
-                        width: 400,
-                        fit: BoxFit.contain,
-                      )));
+                      child: Column(children: [
+                        Center(
+                            child: Image.network(
+                          product.images[0].url,
+                          height: 400,
+                          width: 400,
+                          fit: BoxFit.contain,
+                        )),
+                        Center(
+                            child: Text("label: " +
+                                product.productName))
+                      ]));
                 });
           },
         )
