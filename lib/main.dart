@@ -117,6 +117,7 @@ class MyCustomForm extends StatelessWidget {
 
                 controller.text = code;
 
+<<<<<<< HEAD
                 await Vibration.vibrate();
                 Product product = await getProduct(code);
                 showBottomSheet(
@@ -142,6 +143,35 @@ class MyCustomForm extends StatelessWidget {
               },
             ),
           ],
+=======
+            await Vibration.vibrate();
+            Product product = await getProduct(code);
+            showBottomSheet(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                context: context,
+                builder: (context) {
+                  return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      // color: Colors.grey,
+                      height: MediaQuery.of(context).size.height - 200,
+                      child: Column(children: [
+                        Center(
+                            child: Image.network(
+                          product.images[0].url,
+                          height: 400,
+                          width: 400,
+                          fit: BoxFit.contain,
+                        )),
+                        Center(
+                            child: Text("label: " +
+                                product.productName))
+                      ]));
+                });
+          },
+>>>>>>> 15e0fbd316f0195812c160199e545e9592c5e907
         )
       ],
     );
