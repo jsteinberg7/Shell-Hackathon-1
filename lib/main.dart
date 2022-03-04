@@ -54,13 +54,30 @@ class MyCustomForm extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             decoration: const InputDecoration(
-              icon: Icon(Icons.qr_code),
-              labelText: 'Barcode *',
-              border: UnderlineInputBorder(),
+              icon: Icon(
+                Icons.qr_code,
+                color: Colors.green,
+              ),
+              labelText: ('Barcode *'),
+              labelStyle: TextStyle(
+                color: Colors.green,
+              ),
+              enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                color: Colors.green,
+              )),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                color: Colors.green,
+              )),
+              fillColor: Colors.green,
             ),
           ),
         ),
         ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+          ),
           icon: Icon(Icons.qr_code),
           label: Text('Scan'),
           onPressed: () async {
