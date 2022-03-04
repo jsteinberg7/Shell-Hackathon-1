@@ -55,11 +55,16 @@ class MyCustomForm extends StatelessWidget {
               labelText: 'Barcode *',
               border: UnderlineInputBorder(),
             ),
-            maxLength: 10,
           ),
         ),
         ElevatedButton.icon(
-            icon: Icon(Icons.qr_code), label: Text('Submit'), onPressed: () {})
+          icon: Icon(Icons.qr_code),
+          label: Text('Submit'),
+          onPressed: () async {
+            Product? product = await getProduct(controller.text);
+            print(product!.productName);
+          },
+        )
       ],
     );
   }
