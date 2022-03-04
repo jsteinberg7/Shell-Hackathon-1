@@ -74,8 +74,15 @@ class MyCustomForm extends StatelessWidget {
                 context: context,
                 builder: (context) {
                   return Container(
-                      child:
-                          Center(child: Image.network(product.images[0].url)));
+                      color: Colors.grey[200],
+                      height: 200.0,
+                      child: Column(
+                        children: [
+                          Center(child: Image.network(product.images[0].url)),
+                          SizedBox(height: 25.0),
+                          Center(child: Image.network(product.images[1].url)),
+                        ],
+                      ));
                 });
           },
         )
