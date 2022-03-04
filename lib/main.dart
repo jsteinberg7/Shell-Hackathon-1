@@ -65,6 +65,9 @@ class MyCustomForm extends StatelessWidget {
           label: Text('Scan'),
           onPressed: () async {
             String code = await scanBarcode();
+
+            controller.text = code;
+
             await Vibration.vibrate();
             Product product = await getProduct(code);
             showBottomSheet(
