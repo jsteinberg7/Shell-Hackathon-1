@@ -13,7 +13,8 @@ void main() {
 }
 
 Future<Product> getProduct(String barcode) async {
-  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode, language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
+  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode,
+      language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
   ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
 
   if (result.status == 1) {
@@ -32,7 +33,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
-        appBar: AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
+        appBar:
+            AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
         body: MyCustomForm(),
       ),
     );
@@ -52,13 +54,30 @@ class MyCustomForm extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             decoration: const InputDecoration(
-              icon: Icon(Icons.qr_code),
-              labelText: 'Barcode *',
-              border: UnderlineInputBorder(),
+              icon: Icon(
+                Icons.qr_code,
+                color: Colors.green,
+              ),
+              labelText: ('Barcode *'),
+              labelStyle: TextStyle(
+                color: Colors.green,
+              ),
+              enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                color: Colors.green,
+              )),
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                color: Colors.green,
+              )),
+              fillColor: Colors.green,
             ),
           ),
         ),
         ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.green,
+          ),
           icon: Icon(Icons.qr_code),
           label: Text('Scan'),
           onPressed: () async {
@@ -69,11 +88,14 @@ class MyCustomForm extends StatelessWidget {
             await Vibration.vibrate();
             Product product = await getProduct(code);
             showBottomSheet(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
                 context: context,
                 builder: (context) {
                   return Container(
-                      decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.all(Radius.circular(30))),
+                      decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
                       // color: Colors.grey,
                       height: MediaQuery.of(context).size.height - 200,
                       child: Center(
