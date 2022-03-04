@@ -66,7 +66,9 @@ class MyCustomForm extends StatelessWidget {
           onPressed: () async {
             String code = await scanBarcode();
             await Vibration.vibrate();
-            print("Code" + code);
+            Product p = await getProduct(code);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(p.productName)));
           },
         )
       ],
