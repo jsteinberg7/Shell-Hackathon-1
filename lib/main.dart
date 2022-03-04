@@ -13,8 +13,7 @@ void main() {
 }
 
 Future<Product> getProduct(String barcode) async {
-  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode,
-      language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
+  ProductQueryConfiguration configuration = ProductQueryConfiguration(barcode, language: OpenFoodFactsLanguage.GERMAN, fields: [ProductField.ALL]);
   ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
 
   if (result.status == 1) {
@@ -33,8 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: appTitle,
       home: Scaffold(
-        appBar:
-            AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
+        appBar: AppBar(title: const Text(appTitle), backgroundColor: Colors.green),
         body: MyCustomForm(),
       ),
     );
@@ -65,10 +63,13 @@ class MyCustomForm extends StatelessWidget {
           label: Text('Scan'),
           onPressed: () async {
             String code = await scanBarcode();
+
+            controller.text = code;
+
             await Vibration.vibrate();
             Product p = await getProduct(code);
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text(p.productName)));
+
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(p.productName)));
           },
         )
       ],
