@@ -52,12 +52,11 @@ class MyCustomForm extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextFormField(
+            onEditingComplete: () {
+              print("doen editing");
+            },
             controller: controller,
             decoration: const InputDecoration(
-              icon: Icon(
-                Icons.qr_code,
-                color: Colors.green,
-              ),
               labelText: ('Barcode *'),
               labelStyle: TextStyle(
                 color: Colors.green,
@@ -74,39 +73,75 @@ class MyCustomForm extends StatelessWidget {
             ),
           ),
         ),
-        ElevatedButton.icon(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.green,
-          ),
-          icon: Icon(Icons.qr_code),
-          label: Text('Scan'),
-          onPressed: () async {
-            String code = await scanBarcode();
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              onPressed: () async {
+                Product product = await getProduct(controller.text);
+                showBottomSheet(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
+                          // color: Colors.grey,
+                          height: MediaQuery.of(context).size.height - 200,
+                          child: Center(
+                              child: Image.network(
+                            product.images[0].url,
+                            height: 400,
+                            width: 400,
+                            fit: BoxFit.contain,
+                          )));
+                    });
+              },
+              label: Text("Submit"),
+              icon: Icon(Icons.check),
+            ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              icon: Icon(Icons.qr_code),
+              label: Text('Scan'),
+              onPressed: () async {
+                String code = await scanBarcode();
 
-            controller.text = code;
+                controller.text = code;
 
-            await Vibration.vibrate();
-            Product product = await getProduct(code);
-            showBottomSheet(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30))),
-                context: context,
-                builder: (context) {
-                  return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.grey,
-                          borderRadius: BorderRadius.all(Radius.circular(30))),
-                      // color: Colors.grey,
-                      height: MediaQuery.of(context).size.height - 200,
-                      child: Center(
-                          child: Image.network(
-                        product.images[0].url,
-                        height: 400,
-                        width: 400,
-                        fit: BoxFit.contain,
-                      )));
-                });
-          },
+                await Vibration.vibrate();
+                Product product = await getProduct(code);
+                showBottomSheet(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(30))),
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(30))),
+                          // color: Colors.grey,
+                          height: MediaQuery.of(context).size.height - 200,
+                          child: Center(
+                              child: Image.network(
+                            product.images[0].url,
+                            height: 400,
+                            width: 400,
+                            fit: BoxFit.contain,
+                          )));
+                    });
+              },
+            ),
+          ],
         )
       ],
     );
