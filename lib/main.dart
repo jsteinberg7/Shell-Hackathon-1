@@ -58,7 +58,6 @@ class MyCustomForm extends StatelessWidget {
               labelText: 'Barcode *',
               border: UnderlineInputBorder(),
             ),
-            maxLength: 10,
           ),
         ),
         ElevatedButton.icon(
